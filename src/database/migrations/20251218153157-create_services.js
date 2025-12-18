@@ -1,9 +1,9 @@
-'use strict'
+"use strict";
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('barbershops', {
+    await queryInterface.createTable("services", {
       id: {
         type: Sequelize.BIGINT,
         primaryKey: true,
@@ -11,42 +11,51 @@ module.exports = {
         allowNull: false,
       },
 
+      barbershop_id: {
+        type: Sequelize.BIGINT,
+        allowNull: false,
+        references: {
+          model: "barbershops",
+          key: "id",
+        },
+      },
+
       name: {
         type: Sequelize.STRING,
         allowNull: false,
       },
 
-      slug: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true,
-      },
-
-      phone: {
-        type: Sequelize.STRING,
+      price: {
+        type: Sequelize.DECIMAL(10, 2),
         allowNull: false,
       },
 
-      address: {
-        type: Sequelize.STRING,
-        allowNull: true,
+      duration_minutes: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+
+      is_active: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+        defaultValue: true,
       },
 
       created_at: {
         type: Sequelize.DATE,
         allowNull: false,
-        defaultValue: Sequelize.fn('NOW'),
+        defaultValue: Sequelize.fn("NOW"),
       },
 
       updated_at: {
         type: Sequelize.DATE,
         allowNull: false,
-        defaultValue: Sequelize.fn('NOW'),
+        defaultValue: Sequelize.fn("NOW"),
       },
-    })
+    });
   },
 
   async down(queryInterface) {
-    await queryInterface.dropTable('barbershops')
+    await queryInterface.dropTable("services");
   },
-}
+};
