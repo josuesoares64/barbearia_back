@@ -2,7 +2,6 @@ class Controller {
   constructor(service) {
     this.service = service;
 
-    // garante o this correto
     this.index = this.index.bind(this);
     this.show = this.show.bind(this);
   }
@@ -12,6 +11,7 @@ class Controller {
       const registros = await this.service.findAll();
       return res.status(200).json(registros);
     } catch (error) {
+      console.error(error);
       return res.status(500).json({ error: "Erro ao listar registros" });
     }
   }
@@ -20,7 +20,7 @@ class Controller {
     try {
       const { slug } = req.params;
 
-      const registro = await this.service.pegarBarbeariaPorSlug(slug);
+      const registro = await this.service.findOne({ slug });
 
       if (!registro) {
         return res.status(404).json({ error: "Registro não encontrado" });
@@ -29,7 +29,7 @@ class Controller {
       return res.status(200).json(registro);
     } catch (error) {
       console.error(error);
-      return res.status(500).json({ error: error.message });
+      return res.status(500).json({ error: "Erro ao buscar registro" });
     }
   }
 }

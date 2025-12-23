@@ -1,11 +1,9 @@
 const express = require("express");
-const barbershopRoutes = require("./routes/barbershop.routes");
+const routes = require("./routes");
 
 const app = express();
 
 app.use(express.json());
-
-// rota base
-app.use("/barbershop", barbershopRoutes);
+app.use("/", routes);
 
 module.exports = app;
