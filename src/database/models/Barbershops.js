@@ -5,29 +5,37 @@ const { Model, DataTypes } = require("sequelize");
 module.exports = (sequelize) => {
   class Barbershop extends Model {
     static associate(models) {
-      // Uma barbearia tem vários usuários (barbeiros e dono)
+      /**
+       * Uma barbearia possui vários usuários
+       * (donos e barbeiros)
+       */
       Barbershop.hasMany(models.User, {
         foreignKey: "barbershop_id",
+        as: "users",
       });
 
-      // Uma barbearia tem vários serviços
+      /**
+       * Uma barbearia possui vários serviços
+       */
       Barbershop.hasMany(models.Service, {
         foreignKey: "barbershop_id",
+        as: "services",
       });
 
-      // Uma barbearia tem vários clientes
+      /**
+       * Uma barbearia possui vários clientes
+       */
       Barbershop.hasMany(models.Client, {
         foreignKey: "barbershop_id",
+        as: "clients",
       });
 
-      // Uma barbearia tem vários produtos
-      Barbershop.hasMany(models.Product, {
-        foreignKey: "barbershop_id",
-      });
-
-      // Uma barbearia tem vários agendamentos
+      /**
+       * Uma barbearia possui vários agendamentos
+       */
       Barbershop.hasMany(models.Appointment, {
         foreignKey: "barbershop_id",
+        as: "appointments",
       });
     }
   }
@@ -39,6 +47,12 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
 
+      slug: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+      },
+
       phone: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -47,11 +61,6 @@ module.exports = (sequelize) => {
       address: {
         type: DataTypes.STRING,
         allowNull: true,
-      },
-
-      is_active: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: true,
       },
     },
     {

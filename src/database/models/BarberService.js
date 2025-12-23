@@ -5,19 +5,24 @@ const { Model, DataTypes } = require("sequelize");
 module.exports = (sequelize) => {
   class BarberService extends Model {
     static associate(models) {
-      // tabela de ligação normalmente não precisa de relacionamentos próprios
+      BarberService.belongsTo(models.User, {
+        foreignKey: "barber_id",
+      });
+
+      BarberService.belongsTo(models.Service, {
+        foreignKey: "service_id",
+      });
     }
   }
 
   BarberService.init(
     {
       barber_id: {
-        type: DataTypes.BIGINT,
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
-
       service_id: {
-        type: DataTypes.BIGINT,
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
     },
@@ -26,7 +31,7 @@ module.exports = (sequelize) => {
       modelName: "BarberService",
       tableName: "barber_services",
       underscored: true,
-      timestamps: false, // essa tabela não precisa de created_at
+      timestamps: false,
     }
   );
 
