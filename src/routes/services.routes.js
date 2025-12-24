@@ -1,8 +1,11 @@
 const { Router } = require("express");
-const ServicerController = require("../controllers/ServicesController");
+const ServicesController = require("../controllers/ServicesController");
 
 const router = Router();
 
-router.get("/", ServicerController.index);
+// reservado para futuro (JWT + CRUD)
+// POST /services
+// PUT /services/:id
+// DELETE /services/:id
 
 module.exports = router;
